@@ -255,64 +255,6 @@ Verify the secret:
 kubectl get secret github-container-registry
 ```
 
-**Important:** Reference this secret in your Kubernetes Deployment manifest:
-
-```yaml
-spec:
-  template:
-    spec:
-      imagePullSecrets:
-        - name: github-container-registry
-      containers:
-        - name: app
-          image: ghcr.io/YOUR_GITHUB_USERNAME/YOUR_IMAGE:latest
-```
-
-### 10. Configure Argo CD Application
-
-Create an Argo CD Application that points to your GitHub repository and Kubernetes deployment manifests.
-
-Example configuration:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: devops-demo-app
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY.git
-    targetRevision: main
-    path: kubernetes
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-```
-
-Apply the Application:
-
-```bash
-kubectl apply -f argocd/application.yaml
-```
-
-### 11. Verify Deployment
-
-Check application resources:
-
-```bash
-kubectl get applications -n argocd
-kubectl get pods -A
-kubectl get deployments
-kubectl get services
-```
-
-Once Argo CD synchronizes the manifests from GitHub, the application will be deployed to the Kind Kubernetes cluster.
 
 ### Continuous Deployment Workflow
 
