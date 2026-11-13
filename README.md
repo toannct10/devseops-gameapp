@@ -254,7 +254,8 @@ Verify the secret:
 ```bash
 kubectl get secret github-container-registry
 ```
-
+### 10.ArgoCD Deploy
+![Tic Tac Toe Application](https://github.com/toannct10/devseops-gameapp/blob/main/tictactoe_image.jpg)
 
 ### Continuous Deployment Workflow
 
@@ -268,4 +269,5 @@ kubectl get secret github-container-registry
 **Architecture:**
 
 `GitHub → GitHub Actions → GHCR → Argo CD → Kind Kubernetes → Application`
+
 
